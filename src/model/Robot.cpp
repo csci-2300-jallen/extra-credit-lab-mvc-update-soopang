@@ -26,21 +26,24 @@ const std::vector<Point2D>& Robot::getHistory() const {
 }
 
 void Robot::moveUp() {
-    moveTo(x, y - 1);
+    moveTo(x, y - steps);
 }
 
 void Robot::moveDown() {
-    moveTo(x, y + 1);
+    moveTo(x, y + steps);
 }
 
 void Robot::moveLeft() {
-    moveTo(x - 1, y);
+    moveTo(x - steps, y);
 }
 
 void Robot::moveRight() {
-    moveTo(x + 1, y);
+    moveTo(x + steps, y);
 }
 
+void Robot::upgrade(){
+    steps=2;
+}
 void Robot::undo() {
     if (!canUndo()) {
         return;
@@ -101,6 +104,7 @@ void Robot::loadFromFile(const std::string& filePath) {
     name_ = loadedName;
     history = loadedHistory;
     currentHistoryIndex = loadedIndex;
+
 }
 
 void Robot::moveTo(int newX, int newY) {
@@ -115,6 +119,9 @@ void Robot::moveTo(int newX, int newY) {
     x = newX;
     y = newY;
     recordPosition();
+    if (history.size() == 10){
+        upgrade();
+    }
 }
 
 void Robot::recordPosition() {
