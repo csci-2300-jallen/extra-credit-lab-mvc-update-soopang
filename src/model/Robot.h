@@ -31,7 +31,9 @@ public:
 private:
     void moveTo(int newX, int newY);
     void recordPosition();
+    void upgrade();
 
+    int steps=1;
     static const int gridSize = 5;
     std::string name_;
     int x = 2;
